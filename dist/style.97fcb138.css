@@ -1,0 +1,58 @@
+body {
+  min-height: 100vh;
+  font-family: "Helvetica";
+  font-size: 14px;
+  color: #444444;
+  background-color: #f8f8f8;
+}
+body .loader {
+  height: 100vh;
+}
+body .content,
+body .content-container {
+  display: none;
+  height: 100vh;
+}
+body .config-wrapper {
+  width: 500px;
+  padding: 20px;
+  height: 250px;
+  background: white;
+}
+body .config-wrapper .config-row {
+  height: 218px;
+}
+body .config-wrapper .control-wrapper {
+  width: 120px;
+}
+body .config-wrapper .control-wrapper .label {
+  padding: 5px 3px;
+  color: #888888;
+}
+body .config-wrapper .seat-wrapper {
+  width: 60px;
+}
+body .config-wrapper .price-wrapper {
+  vertical-align: top;
+  width: 75px;
+}
+body .config-wrapper .price-wrapper #cost-value {
+  padding-top: 8px;
+  padding-bottom: 4px;
+  font-size: 16px;
+  font-weight: 500;
+}
+body .config-wrapper .price-wrapper .label-price {
+  padding: 5px 0;
+  color: #888888;
+}
+body .button-wrapper {
+  width: 500px;
+  text-align: right;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/*# sourceMappingURL=/style.97fcb138.css.map */

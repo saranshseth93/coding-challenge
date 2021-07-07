@@ -1,4 +1,6 @@
-$(document).on("ready", function (e) {
+const $ = require("jquery");
+const bootstrap = require("bootstrap");
+$(document).ready(function (e) {
   console.log("hi");
   setTimeout(function () {
     $(".loader").addClass("hidden");

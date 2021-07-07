@@ -1,4 +1,3 @@
-var $ = require("jquery");
 $(document).ready(function (e) {
   console.log("hi");
   setTimeout(function () {

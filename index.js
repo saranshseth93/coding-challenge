@@ -1,4 +1,4 @@
-$(document).ready(function (e) {
+$(document).on("ready", function (e) {
   console.log("hi");
   setTimeout(function () {
     $(".loader").addClass("hidden");

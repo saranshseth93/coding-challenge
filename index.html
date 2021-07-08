@@ -20,8 +20,13 @@
   </div>
   <div class="container-fluid content">
     <div class="d-flex flex-column bd-highlight mb-3 justify-content-center align-items-center content-container">
-      <div class="">
-        <h2 class="mb-md-4">Subscriptions</h2>
+      <div class="heading-wrapper">
+        <h2 class="mb-md-4 heading-text">Subscriptions</h2>
+        <div class="error hidden">
+          <div class="alert alert-danger" role="alert">
+            Error fetching data! Please try again...
+          </div>
+        </div>
       </div>
       <div class="config-wrapper">
         <div class="d-flex justify-content-around align-items-center align-self-center config-row">
@@ -38,16 +43,16 @@
             </div>
           </div>
 
-          <div class="control-wrapper d-flex flex-column seat-wrapper">
+          <div class="control-wrapper d-flex align-items-center flex-column seat-wrapper">
             <div>
-              <input class="form-control" id="seats-input" type="text" value="">
+              <input class="form-control" id="seats-input" type="number" value="">
             </div>
             <div class="label">
               <label for="seats-input">Seats</label>
             </div>
           </div>
 
-          <div class="price-wrapper d-flex flex-column">
+          <div class="price-wrapper d-flex flex-column align-items-center">
             <div id="cost-value">$50</div>
             <div class="label-price">Price</div>
           </div>
@@ -55,7 +60,7 @@
         </div>
       </div>
       <div class="button-wrapper">
-        <button type="button" disabled class="btn btn-secondary mt-3">Update
+        <button type="button" id="update-btn" disabled class="btn btn-secondary mt-3">Update
           Subscription</button>
       </div>
 
@@ -64,6 +69,7 @@
 
   </div>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="./mock.js"></script>
   <script src="./index.js"></script>
 </body>
 

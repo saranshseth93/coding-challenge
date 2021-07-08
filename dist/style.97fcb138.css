@@ -12,12 +12,21 @@ body .content,
 body .content-container {
   display: none;
   height: 100vh;
+  width: 500px;
+}
+body .heading-wrapper {
+  width: 500px;
+}
+body .heading-wrapper .heading-text {
+  width: 100%;
+  text-align: left;
 }
 body .config-wrapper {
   width: 500px;
   padding: 20px;
   height: 250px;
   background: white;
+  border: 1px solid #e9e9e9;
 }
 body .config-wrapper .config-row {
   height: 218px;

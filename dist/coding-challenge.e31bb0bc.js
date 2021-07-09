@@ -12275,7 +12275,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.initialize = initialize;
 exports.update = update;
 exports.preview = preview;
-exports.storedSubscription = exports.prevSubscription = exports.PLAN_NAMES = exports.PLAN_COSTS = void 0;
+exports.storedSubscription = exports.PLAN_NAMES = exports.PLAN_COSTS = void 0;
 
 //Required for jquery to work with npm package
 var $ = require("jquery");
@@ -12298,8 +12298,6 @@ var PLAN_NAMES = {
   best: "Best"
 };
 exports.PLAN_NAMES = PLAN_NAMES;
-var prevSubscription;
-exports.prevSubscription = prevSubscription;
 var storedSubscription = {
   plan: "good",
   name: "Good",
@@ -12321,7 +12319,6 @@ function update() {
   mockjax({
     url: "/api/current",
     type: "put",
-    responseDelay: 1000,
     response: function response(settings) {
       var newData = {
         plan: settings.data.plan,
@@ -12329,7 +12326,6 @@ function update() {
         seats: settings.data.seats,
         cost: settings.data.seats * PLAN_COSTS[settings.data.plan]
       };
-      exports.prevSubscription = prevSubscription = storedSubscription;
       exports.storedSubscription = storedSubscription = newData;
       this.responseText = newData;
     }
@@ -20281,25 +20277,79 @@ var _mock = require("./mock");
 var $ = require("jquery"); //Required for bootstrap to work with npm package
 
 
-var bootstrap = require("bootstrap"); //When the DOM is ready
+var bootstrap = require("bootstrap");
 
+var previous = ""; //When the DOM is ready
 
 $(document).ready(function (e) {
   //Getting all the mockjax functions initial run
   (0, _mock.initialize)();
   (0, _mock.update)();
-  (0, _mock.preview)(); //Get our first response to display the mock data
+  (0, _mock.preview)();
+  getValues(); //Onchange events
 
+  $("#plan-input").on("change", changePlan);
+  $("#seats-input").on("change", changePlan); //When user clicks update button
+
+  $("#update-btn").on("click", function () {
+    //show the loader
+    $(".loader").removeClass("hidden");
+    $(".content").hide("slow");
+    $(".prev-plan").html(previous.name);
+    $(".prev-seats").html(previous.seats);
+    $(".prev-price").html("$" + _mock.PLAN_COSTS[previous.plan] * previous.seats);
+    $.ajax({
+      type: "put",
+      url: "/api/current",
+      data: {
+        plan: $("#plan-input").val(),
+        seats: $("#seats-input").val()
+      }
+    }).then(function (response) {
+      $(".new-plan").html(response.name);
+      $(".new-seats").html(response.seats);
+      $(".new-price").html("$" + _mock.PLAN_COSTS[response.plan] * response.seats);
+      $(".loader").addClass("hidden");
+      $(".preview").fadeIn("slow");
+    });
+  }); //When user clicks back button
+
+  $("#back-btn").on("click", function () {
+    previewDetails();
+  });
+});
+
+function previewDetails() {
+  //Hide the loader once the response is received
+  $(".loader").addClass("hidden");
+  $(".preview").fadeOut("fast");
+  $(".content").fadeIn("slow"); //Check if response was received non-empty
+
+  if (typeof _mock.storedSubscription != "undefined" || _mock.storedSubscription != "") {
+    previous = _mock.storedSubscription; //Hide the error if the fetch was successful
+
+    $(".error").addClass("hidden"); //Update the DOM elements
+
+    updateDOM(_mock.storedSubscription);
+  } else {
+    //Display the error if the fetch was unsuccessful
+    $(".error").removeClass("hidden");
+  }
+}
+
+function getValues() {
+  //Get our first response to display the mock data
   $.get({
     url: "/api/current"
   }).then(function success(response) {
-    console.log(response); //Hide the loader once the response is received
-
+    //Hide the loader once the response is received
     $(".loader").addClass("hidden");
+    $(".preview").fadeOut("fast");
     $(".content").fadeIn("slow"); //Check if response was received non-empty
 
     if (typeof response != "undefined" || response != "") {
-      //Hide the error if the fetch was successful
+      previous = response; //Hide the error if the fetch was successful
+
       $(".error").addClass("hidden"); //Update the DOM elements
 
       updateDOM(response);
@@ -20307,26 +20357,30 @@ $(document).ready(function (e) {
       //Display the error if the fetch was unsuccessful
       $(".error").removeClass("hidden");
     }
-  }); //Onchange events
+  });
+} //When the user changes the selected plan
 
-  $("#plan-input").on("change", changePlan);
-  $("#seats-input").on("change", changePlan);
-}); //When the user changes the selected plan
 
 function changePlan() {
-  //if seats is not empty calculate price
-  if ($.trim($("#seats-input").val()) != "") {
-    var plan = $("#plan-input").val();
-    var seats = $.trim($("#seats-input").val());
-    var price = seats * _mock.PLAN_COSTS[plan];
-    $("#cost-value").html("$" + price);
-
-    if (plan != _mock.storedSubscription.plan || seats != _mock.storedSubscription.seats) {
-      $("#update-btn").attr("disabled", false);
-    } else {
-      $("#update-btn").attr("disabled", true);
+  $.post({
+    url: "/api/preview",
+    data: {
+      plan: $("#plan-input").val(),
+      seats: $("#seats-input").val()
     }
-  }
+  }).then(function (response) {
+    //if seats is not empty calculate price
+    if ($.trim($("#seats-input").val()) != "") {
+      console.log(response);
+      updateDOM(response);
+
+      if (response.plan != _mock.storedSubscription.plan || response.seats != _mock.storedSubscription.seats) {
+        $("#update-btn").attr("disabled", false);
+      } else {
+        $("#update-btn").attr("disabled", true);
+      }
+    }
+  });
 } //Update the DOM on received value
 
 
@@ -20366,7 +20420,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60302" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62163" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

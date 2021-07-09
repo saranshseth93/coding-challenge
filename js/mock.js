@@ -4,7 +4,7 @@ const $ = require("jquery");
 const mockjax = require("jquery-mockjax")($, window);
 
 //Clear the previous versions of mockjax
-// mockjax.clear();
+mockjax.clear();
 
 export const PLAN_COSTS = {
   basic: 1,
@@ -20,7 +20,6 @@ export const PLAN_NAMES = {
   best: "Best"
 };
 
-export let prevSubscription;
 export let storedSubscription = {
   plan: "good",
   name: "Good",
@@ -41,7 +40,6 @@ export function update() {
   mockjax({
     url: "/api/current",
     type: "put",
-    responseDelay: 1000,
     response: function (settings) {
       var newData = {
         plan: settings.data.plan,
@@ -49,7 +47,6 @@ export function update() {
         seats: settings.data.seats,
         cost: settings.data.seats * PLAN_COSTS[settings.data.plan]
       };
-      prevSubscription = storedSubscription;
       storedSubscription = newData;
       this.responseText = newData;
     }

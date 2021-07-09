@@ -9,7 +9,7 @@
 
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="style.scss" />
+  <link rel="stylesheet" href="./scss/style.scss" />
 </head>
 
 <body>
@@ -24,7 +24,7 @@
         <h2 class="mb-md-4 heading-text">Subscriptions</h2>
         <div class="error hidden">
           <div class="alert alert-danger" role="alert">
-            Error fetching data! Please try again...
+            <i class="fas fa-exclamation-triangle"></i> Error fetching data! Please try again...
           </div>
         </div>
       </div>
@@ -64,13 +64,68 @@
           Subscription</button>
       </div>
 
-    </div>
-  </div>
+    </div> <!-- Content container end -->
+  </div> <!-- Update content end -->
 
+  <div class="container-fluid preview">
+
+    <div class="d-flex flex-column bd-highlight mb-3 justify-content-center align-items-center preview-container">
+      <div class="preview-heading-wrapper">
+        <h2 class="mb-md-4 heading-text flex-column">Subscriptions</h2>
+        <div class="success">
+          <div class="alert alert-primary" role="alert">
+            <i class="fas fa-check-circle"></i> Subscription updated successfully!
+          </div>
+        </div>
+      </div>
+      <div class="preview-wrapper d-flex flex-row">
+        <div class="previous-card preview-box">
+          <h5 class="preview-title">Previous Subscription</h5>
+          <table class="preview-table">
+            <tr>
+              <td class="preview-table-title">Plan</td>
+              <td class="prev-values prev-plan">Good</td>
+            </tr>
+            <tr>
+              <td class="preview-table-title">Seats</td>
+              <td class="prev-values prev-seats">5</td>
+            </tr>
+            <tr>
+              <td class="preview-table-title">Price</td>
+              <td class="prev-values prev-price">$50</td>
+            </tr>
+          </table>
+        </div>
+        <div class="updated-card preview-box">
+          <h5 class="preview-title">Updated Subscription</h5>
+          <table class="preview-table">
+            <tr>
+              <td class="preview-table-title">Plan</td>
+              <td class="updated-values new-plan">Good</td>
+            </tr>
+            <tr>
+              <td class="preview-table-title">Seats</td>
+              <td class="updated-values new-seats">5</td>
+            </tr>
+            <tr>
+              <td class="preview-table-title">Price</td>
+              <td class="updated-values new-price">$50</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!--Preview wrapper-->
+      <div class="preview-button-wrapper">
+        <button type="button" id="back-btn" class="btn btn-secondary mt-3">Back</button>
+      </div>
+    </div>
+    <!--preview container end-->
   </div>
+  <!--Preview content end-->
   <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="./mock.js"></script>
-  <script src="./index.js"></script>
+  <script src="./js/mock.js"></script>
+  <script src="./js/index.js"></script>
+  <script src="https://kit.fontawesome.com/df7dc6d9d4.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

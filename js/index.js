@@ -22,6 +22,7 @@ $(document).ready(function (e) {
   update();
   preview();
 
+  //Display the values on the DOM from the fetched values
   getValues();
 
   //Onchange events
@@ -34,10 +35,12 @@ $(document).ready(function (e) {
     $(".loader").removeClass("hidden");
     $(".content").hide("slow");
 
+    //Set the previous values
     $(".prev-plan").html(previous.name);
     $(".prev-seats").html(previous.seats);
     $(".prev-price").html("$" + PLAN_COSTS[previous.plan] * previous.seats);
 
+    //Make an ajax request to update values
     $.ajax({
       type: "put",
       url: "/api/current",
@@ -46,10 +49,12 @@ $(document).ready(function (e) {
         seats: $("#seats-input").val()
       }
     }).then(function (response) {
+      //Update the new values
       $(".new-plan").html(response.name);
       $(".new-seats").html(response.seats);
       $(".new-price").html("$" + PLAN_COSTS[response.plan] * response.seats);
 
+      //Hide loader
       $(".loader").addClass("hidden");
       $(".preview").fadeIn("slow");
     });
@@ -61,6 +66,7 @@ $(document).ready(function (e) {
   });
 });
 
+//Function to display updated values based on input change
 function previewDetails() {
   //Hide the loader once the response is received
   $(".loader").addClass("hidden");
@@ -81,6 +87,7 @@ function previewDetails() {
   }
 }
 
+//Function to fetch values
 function getValues() {
   //Get our first response to display the mock data
   $.get({
@@ -109,6 +116,8 @@ function getValues() {
 
 //When the user changes the selected plan
 function changePlan() {
+  $(".form-control").prop("disabled", true);
+
   $.post({
     url: "/api/preview",
     data: {
@@ -116,6 +125,8 @@ function changePlan() {
       seats: $("#seats-input").val()
     }
   }).then(function (response) {
+    $(".form-control").prop("disabled", false);
+
     //if seats is not empty calculate price
     if ($.trim($("#seats-input").val()) != "") {
       console.log(response);

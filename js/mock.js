@@ -39,6 +39,7 @@ export function initialize() {
 export function update() {
   mockjax({
     url: "/api/current",
+    responseDelay: 2000,
     type: "put",
     response: function (settings) {
       var newData = {

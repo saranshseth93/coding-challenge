@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "run": "parcel index.html",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
@@ -14,11 +14,13 @@
     "@popperjs/core": "^2.9.2",
     "bootstrap": "^5.0.2",
     "canvas": "^2.8.0",
+    "chai": "^4.3.4",
     "jquery": "^3.6.0",
     "jquery-mockjax": "^2.6.0",
     "jsdom": "^16.6.0"
   },
   "devDependencies": {
+    "mocha": "^9.0.2",
     "sass": "^1.35.1"
   }
 }

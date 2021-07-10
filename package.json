@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "run": "parcel index.html",
-    "test": "mocha"
+    "test": "mocha -r jsdom-global/register"
   },
   "keywords": [],
   "author": "",
@@ -15,11 +15,13 @@
     "bootstrap": "^5.0.2",
     "canvas": "^2.8.0",
     "chai": "^4.3.4",
+    "esm": "^3.2.25",
     "jquery": "^3.6.0",
-    "jquery-mockjax": "^2.6.0",
-    "jsdom": "^16.6.0"
+    "jquery-mockjax": "^2.6.0"
   },
   "devDependencies": {
+    "jsdom": "16.6.0",
+    "jsdom-global": "3.0.2",
     "mocha": "^9.0.2",
     "sass": "^1.35.1"
   }

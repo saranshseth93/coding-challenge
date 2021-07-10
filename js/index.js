@@ -1,10 +1,9 @@
 import {
   initialize,
-  PLAN_NAMES,
   PLAN_COSTS,
   update,
   preview,
-  storedSubscription
+  storedSubscription,
 } from "./mock";
 
 //Required for jquery to work with npm package
@@ -46,8 +45,8 @@ $(document).ready(function (e) {
       url: "/api/current",
       data: {
         plan: $("#plan-input").val(),
-        seats: $("#seats-input").val()
-      }
+        seats: $("#seats-input").val(),
+      },
     }).then(function (response) {
       //Update the new values
       $(".new-plan").html(response.name);
@@ -80,7 +79,7 @@ function previewDetails() {
     //Update the DOM elements
     updateDOM(storedSubscription);
 
-    $("#update-btn").attr("disabled", true);
+    disableInput($("#update-btn"), true);
   } else {
     //Display the error if the fetch was unsuccessful
     $(".error").removeClass("hidden");
@@ -91,7 +90,7 @@ function previewDetails() {
 function getValues() {
   //Get our first response to display the mock data
   $.get({
-    url: "/api/current"
+    url: "/api/current",
   }).then(function success(response) {
     //Hide the loader once the response is received
     $(".loader").addClass("hidden");
@@ -116,32 +115,38 @@ function getValues() {
 
 //When the user changes the selected plan
 function changePlan() {
-  $(".form-control").prop("disabled", true);
+  disableInput($(".form-control"), true);
 
   $.post({
     url: "/api/preview",
     data: {
       plan: $("#plan-input").val(),
-      seats: $("#seats-input").val()
-    }
+      seats: $("#seats-input").val(),
+    },
   }).then(function (response) {
-    $(".form-control").prop("disabled", false);
+    disableInput($(".form-control"), false);
 
     //if seats is not empty calculate price
     if ($.trim($("#seats-input").val()) != "") {
       console.log(response);
       updateDOM(response);
 
+      //TODO: Disable update button if seats is empty or invalid
       if (
         response.plan != storedSubscription.plan ||
         response.seats != storedSubscription.seats
       ) {
-        $("#update-btn").attr("disabled", false);
+        disableInput($("#update-btn"), false);
       } else {
-        $("#update-btn").attr("disabled", true);
+        disableInput($("#update-btn"), true);
       }
     }
   });
+}
+
+//To enable/disable the update button
+function disableInput(input, enabled) {
+  input.attr("disabled", enabled);
 }
 
 //Update the DOM on received value

@@ -10,21 +10,21 @@ export const PLAN_COSTS = {
   basic: 1,
   good: 10,
   better: 100,
-  best: 1000
+  best: 1000,
 };
 
 export const PLAN_NAMES = {
   basic: "Basic",
   good: "Good",
   better: "Better",
-  best: "Best"
+  best: "Best",
 };
 
 export let storedSubscription = {
   plan: "good",
   name: "Good",
   seats: 2,
-  cost: 2 * PLAN_COSTS.good
+  cost: 2 * PLAN_COSTS.good,
 };
 
 export function initialize() {
@@ -32,7 +32,7 @@ export function initialize() {
   mockjax({
     url: "/api/current",
     type: "get",
-    responseText: storedSubscription
+    responseText: storedSubscription,
   });
 }
 
@@ -46,11 +46,11 @@ export function update() {
         plan: settings.data.plan,
         name: PLAN_NAMES[settings.data.plan],
         seats: settings.data.seats,
-        cost: settings.data.seats * PLAN_COSTS[settings.data.plan]
+        cost: settings.data.seats * PLAN_COSTS[settings.data.plan],
       };
       storedSubscription = newData;
       this.responseText = newData;
-    }
+    },
   });
 }
 
@@ -63,8 +63,13 @@ export function preview() {
         plan: settings.data.plan,
         name: PLAN_NAMES[settings.data.plan],
         seats: settings.data.seats,
-        cost: settings.data.seats * PLAN_COSTS[settings.data.plan]
+        cost: settings.data.seats * PLAN_COSTS[settings.data.plan],
       };
-    }
+    },
   });
 }
+
+// exports._test = {
+//   storedSubscription: storedSubscription,
+//   initialize: intialize,
+// };

@@ -1,11 +1,42 @@
 const chai = require("chai");
 const expect = chai.expect;
 
-describe("Test", () => {
-  it("it should be this", () => {
-    var answer = 43;
+const $ = require("jquery");
 
-    // AssertionError: expected 43 to equal 42.
-    expect(answer).to.equal(43);
+describe("Initial Ajax Call", () => {
+  it("The mockjax call should return the storedSubscription", () => {
+    let storedSubscription = {
+      plan: "good",
+      name: "Good",
+      seats: 2,
+      cost: 20,
+    };
+
+    $.get({
+      url: "/api/current",
+    }).then(function success(response) {
+      expect(response).to.equal(storedSubscription);
+    });
+  });
+});
+
+describe("Update Ajax Call", () => {
+  it("The update call should return the storedSubscription", () => {
+    let storedSubscription = {
+      plan: "good",
+      name: "Good",
+      seats: 5,
+      cost: 50,
+    };
+
+    $.post({
+      url: "/api/preview",
+      data: {
+        plan: "good",
+        seats: 5,
+      },
+    }).then(function (response) {
+      expect(response).to.equal(storedSubscription);
+    });
   });
 });

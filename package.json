@@ -24,6 +24,7 @@
     "jsdom": "16.6.0",
     "jsdom-global": "3.0.2",
     "mocha": "^9.0.2",
+    "parcel-bundler": "^1.12.5",
     "sass": "^1.35.1"
   }
 }

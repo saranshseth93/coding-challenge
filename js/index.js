@@ -37,7 +37,9 @@ $(document).ready(function (e) {
     //Set the previous values
     $(".prev-plan").html(previous.name);
     $(".prev-seats").html(previous.seats);
-    $(".prev-price").html("$" + PLAN_COSTS[previous.plan] * previous.seats);
+    $(".prev-price").html(
+      "$" + calculatePrice(PLAN_COSTS[previous.plan], previous.seats)
+    );
 
     //Make an ajax request to update values
     $.ajax({
@@ -51,7 +53,9 @@ $(document).ready(function (e) {
       //Update the new values
       $(".new-plan").html(response.name);
       $(".new-seats").html(response.seats);
-      $(".new-price").html("$" + PLAN_COSTS[response.plan] * response.seats);
+      $(".new-price").html(
+        "$" + calculatePrice(PLAN_COSTS[response.plan], response.seats)
+      );
 
       //Hide loader
       $(".loader").addClass("hidden");
@@ -147,6 +151,12 @@ function changePlan() {
 //To enable/disable the update button
 function disableInput(input, enabled) {
   input.attr("disabled", enabled);
+}
+
+//Calculate price based on plan and seat selection
+function calculatePrice(plan, seats) {
+  //TODO: Add support for multiple currencies
+  return plan * seats;
 }
 
 //Update the DOM on received value

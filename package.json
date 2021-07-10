@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "run": "parcel index.html",
+    "run": "npm install && parcel index.html",
     "test": "mocha -r jsdom-global/register"
   },
   "keywords": [],
